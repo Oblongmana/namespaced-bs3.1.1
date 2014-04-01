@@ -1,5 +1,6 @@
 bs3_1_1 {
-    @import "/less/bootstrap.less";
+    @import (reference) "/less/bootstrap.less"; //import bs less by reference so we can access vars
+    @import (less) "/dist/css/bootstrap.css"; //import already compiled bs css verbatim
     font-family: @font-family-base;
     font-size: @font-size-base;
     line-height: @line-height-base;

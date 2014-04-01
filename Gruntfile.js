@@ -162,7 +162,7 @@ module.exports = function (grunt) {
           sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
         },
         files: {
-          'dist/css/<%= pkg.name %>.css': 'namespace.less'
+          'dist/css/<%= pkg.name %>.css': 'less/bootstrap.less'
         }
       },
       compileTheme: {
@@ -177,6 +177,18 @@ module.exports = function (grunt) {
           'dist/css/<%= pkg.name %>-theme.css': 'less/theme.less'
         }
       },
+      namespace: {
+        options: {
+          strictMath: true,
+          sourceMap: true,
+          outputSourceFiles: true,
+          sourceMapURL: '<%= pkg.name %>.css.map',
+          sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
+        },
+        files: {
+          'dist/css/<%= pkg.name %>.css': 'namespace.less'
+        }
+      },
       minify: {
         options: {
           cleancss: true,
@@ -188,6 +200,7 @@ module.exports = function (grunt) {
         }
       }
     },
+
 
     cssmin: {
       compress: {
@@ -323,7 +336,7 @@ module.exports = function (grunt) {
       },
       less: {
         files: 'less/*.less',
-        tasks: 'less'
+        tasks: ['less:compileCore', 'less:compileTheme','less:minify']
       }
     },
 
@@ -389,13 +402,16 @@ module.exports = function (grunt) {
   grunt.registerTask('dist-js', ['concat', 'uglify']);
 
   // CSS distribution task.
-  grunt.registerTask('dist-css', ['less', 'cssmin', 'csscomb', 'usebanner']);
+  grunt.registerTask('dist-css', ['less:compileCore', 'less:compileTheme','less:minify', 'cssmin', 'csscomb', 'usebanner']);
+  grunt.registerTask('dist-css-namespace', ['less', 'cssmin', 'csscomb', 'usebanner']);
 
   // Docs distribution task.
   grunt.registerTask('dist-docs', 'copy:docs');
 
   // Full distribution task.
   grunt.registerTask('dist', ['clean', 'dist-css', 'copy:fonts', 'dist-js', 'dist-docs']);
+
+  grunt.registerTask('dist-namespace', ['clean', 'dist-css-namespace', 'copy:fonts', 'dist-js', 'dist-docs']);
 
   // Default task.
   grunt.registerTask('default', ['test', 'dist', 'build-glyphicons-data', 'build-customizer', 'update-shrinkwrap']);
