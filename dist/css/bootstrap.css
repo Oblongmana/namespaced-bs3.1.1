@@ -5,7 +5,13 @@
  */
 
 bs3_1_1 {
+  margin: 0;
   /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  background-color: #fff;
 }
 bs3_1_1 html {
   font-family: sans-serif;
